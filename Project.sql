@@ -4,136 +4,136 @@ USE netflix;
 
 DROP TABLE IF EXISTS `users`;
 CREATE TABLE `users`(
-    id BIGINT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY COMMENT 'Индивидуальное id',
-    first_name VARCHAR(100) COMMENT 'Имя',
-    last_name VARCHAR(100) COMMENT 'Фамилия',
-    email VARCHAR(100) UNIQUE COMMENT 'Почта',
-    phone BIGINT UNSIGNED UNIQUE COMMENT 'Номер телефона',
-    password_hash VARCHAR(256) COMMENT 'Пароль',
+    id BIGINT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY COMMENT 'РРЅРґРёРІРёРґСѓР°Р»СЊРЅРѕРµ id',
+    first_name VARCHAR(100) COMMENT 'РРјСЏ',
+    last_name VARCHAR(100) COMMENT 'Р¤Р°РјРёР»РёСЏ',
+    email VARCHAR(100) UNIQUE COMMENT 'РџРѕС‡С‚Р°',
+    phone BIGINT UNSIGNED UNIQUE COMMENT 'РќРѕРјРµСЂ С‚РµР»РµС„РѕРЅР°',
+    password_hash VARCHAR(256) COMMENT 'РџР°СЂРѕР»СЊ',
     
     INDEX idx_users_username(first_name, last_name)
-) COMMENT 'Пользователи';
+) COMMENT 'РџРѕР»СЊР·РѕРІР°С‚РµР»Рё';
 
 DROP TABLE IF EXISTS `profiles`;
 CREATE TABLE `profiles`(
-    user_id BIGINT UNSIGNED NOT NULL PRIMARY KEY COMMENT 'Ссылается на users',
-    gender char(1) COMMENT 'Гендер',
-    hometown VARCHAR(200) COMMENT 'Город',
-    created_at DATETIME DEFAULT NOW() COMMENT 'Дата создания',
-    updated_at DATETIME DEFAULT NOW() COMMENT 'Дата обновления',
-    was_online DATETIME DEFAULT NOW()  COMMENT 'Дата последнего захода',
-    birthday_at DATE COMMENT 'Дата рождения',
-    about_me TINYTEXT COMMENT 'О себе',
-    groups_profiles VARCHAR(32) DEFAULT 'Посетитель',
+    user_id BIGINT UNSIGNED NOT NULL PRIMARY KEY COMMENT 'РЎСЃС‹Р»Р°РµС‚СЃСЏ РЅР° users',
+    gender char(1) COMMENT 'Р“РµРЅРґРµСЂ',
+    hometown VARCHAR(200) COMMENT 'Р“РѕСЂРѕРґ',
+    created_at DATETIME DEFAULT NOW() COMMENT 'Р”Р°С‚Р° СЃРѕР·РґР°РЅРёСЏ',
+    updated_at DATETIME DEFAULT NOW() COMMENT 'Р”Р°С‚Р° РѕР±РЅРѕРІР»РµРЅРёСЏ',
+    was_online DATETIME DEFAULT NOW()  COMMENT 'Р”Р°С‚Р° РїРѕСЃР»РµРґРЅРµРіРѕ Р·Р°С…РѕРґР°',
+    birthday_at DATE COMMENT 'Р”Р°С‚Р° СЂРѕР¶РґРµРЅРёСЏ',
+    about_me TINYTEXT COMMENT 'Рћ СЃРµР±Рµ',
+    groups_profiles VARCHAR(32) DEFAULT 'РџРѕСЃРµС‚РёС‚РµР»СЊ',
     
     FOREIGN KEY (user_id) REFERENCES users(id)
-) COMMENT 'Профиль';
+) COMMENT 'РџСЂРѕС„РёР»СЊ';
 
 DROP TABLE IF EXISTS `messeges`;
 CREATE TABLE `messeges`(
-    id SERIAL COMMENT 'Айди',
-    from_user_id BIGINT UNSIGNED NOT NULL COMMENT 'Отправитель',
-    to_user_id BIGINT UNSIGNED NOT NULL COMMENT 'Получатель',
-    status ENUM('unread', 'read') COMMENT 'Прочитано сообщение или нет',
-    body TEXT COMMENT 'Текст сообщения',
-    created_at DATETIME DEFAULT NOW() COMMENT 'Дата отправления сообщения',
+    id SERIAL COMMENT 'РђР№РґРё',
+    from_user_id BIGINT UNSIGNED NOT NULL COMMENT 'РћС‚РїСЂР°РІРёС‚РµР»СЊ',
+    to_user_id BIGINT UNSIGNED NOT NULL COMMENT 'РџРѕР»СѓС‡Р°С‚РµР»СЊ',
+    status ENUM('unread', 'read') COMMENT 'РџСЂРѕС‡РёС‚Р°РЅРѕ СЃРѕРѕР±С‰РµРЅРёРµ РёР»Рё РЅРµС‚',
+    body TEXT COMMENT 'РўРµРєСЃС‚ СЃРѕРѕР±С‰РµРЅРёСЏ',
+    created_at DATETIME DEFAULT NOW() COMMENT 'Р”Р°С‚Р° РѕС‚РїСЂР°РІР»РµРЅРёСЏ СЃРѕРѕР±С‰РµРЅРёСЏ',
     
     FOREIGN KEY (from_user_id) REFERENCES users(id),
     FOREIGN KEY (to_user_id) REFERENCES users(id)
-) COMMENT 'Сообщения';
+) COMMENT 'РЎРѕРѕР±С‰РµРЅРёСЏ';
 
 DROP TABLE IF EXISTS `movie_genres`;
 CREATE TABLE `movie_genres`(
-    id TINYINT UNSIGNED NOT NULL UNIQUE COMMENT 'Айди',
-    name VARCHAR(255) COMMENT 'Жанр фильма'
-) COMMENT 'Жанр фильма';
+    id TINYINT UNSIGNED NOT NULL UNIQUE COMMENT 'РђР№РґРё',
+    name VARCHAR(255) COMMENT 'Р–Р°РЅСЂ С„РёР»СЊРјР°'
+) COMMENT 'Р–Р°РЅСЂ С„РёР»СЊРјР°';
 
 DROP TABLE IF EXISTS `movies`;
 CREATE TABLE `movies`(
-    id SERIAL COMMENT 'Айди',
-    name VARCHAR(255) COMMENT 'Название Фильма',
-    country VARCHAR(255) COMMENT 'Страна',
-    body TINYTEXT COMMENT 'Описание фильма',
-    file_name VARCHAR(255) COMMENT 'Путь к файлу фильма',
-    year SMALLINT COMMENT 'Год выпуска'
+    id SERIAL COMMENT 'РђР№РґРё',
+    name VARCHAR(255) COMMENT 'РќР°Р·РІР°РЅРёРµ Р¤РёР»СЊРјР°',
+    country VARCHAR(255) COMMENT 'РЎС‚СЂР°РЅР°',
+    body TINYTEXT COMMENT 'РћРїРёСЃР°РЅРёРµ С„РёР»СЊРјР°',
+    file_name VARCHAR(255) COMMENT 'РџСѓС‚СЊ Рє С„Р°Р№Р»Сѓ С„РёР»СЊРјР°',
+    year SMALLINT COMMENT 'Р“РѕРґ РІС‹РїСѓСЃРєР°'
     
 ); 
 
 DROP TABLE IF EXISTS `filmmakers`;
 CREATE TABLE `filmmakers`(
-    id SERIAL COMMENT 'Айди',
-    movie_id BIGINT UNSIGNED NOT NULL COMMENT 'Принадлежность создателей к фильму',
-    director VARCHAR(255) COMMENT 'Режиссер',
-    producer VARCHAR(255) COMMENT 'Продюссер',
-    screenwriter VARCHAR(255)  COMMENT 'Сценарист',
-    operator VARCHAR(255)  COMMENT 'Оператор',
-    composer VARCHAR(255)  COMMENT 'Композитор',
-    painter VARCHAR(255)  COMMENT 'Художник',
-    actors TINYTEXT COMMENT 'Актеры',
+    id SERIAL COMMENT 'РђР№РґРё',
+    movie_id BIGINT UNSIGNED NOT NULL COMMENT 'РџСЂРёРЅР°РґР»РµР¶РЅРѕСЃС‚СЊ СЃРѕР·РґР°С‚РµР»РµР№ Рє С„РёР»СЊРјСѓ',
+    director VARCHAR(255) COMMENT 'Р РµР¶РёСЃСЃРµСЂ',
+    producer VARCHAR(255) COMMENT 'РџСЂРѕРґСЋСЃСЃРµСЂ',
+    screenwriter VARCHAR(255)  COMMENT 'РЎС†РµРЅР°СЂРёСЃС‚',
+    operator VARCHAR(255)  COMMENT 'РћРїРµСЂР°С‚РѕСЂ',
+    composer VARCHAR(255)  COMMENT 'РљРѕРјРїРѕР·РёС‚РѕСЂ',
+    painter VARCHAR(255)  COMMENT 'РҐСѓРґРѕР¶РЅРёРє',
+    actors TINYTEXT COMMENT 'РђРєС‚РµСЂС‹',
       
     FOREIGN KEY (movie_id) REFERENCES movies(id)
-) COMMENT 'Создатели фильма';
+) COMMENT 'РЎРѕР·РґР°С‚РµР»Рё С„РёР»СЊРјР°';
 
 DROP TABLE IF EXISTS `film_genres`;
 CREATE TABLE `film_genres`(
-    id SERIAL COMMENT 'Айди',
-    movie_id BIGINT UNSIGNED NOT NULL COMMENT 'Айди фильма',
-    movie_genres_id TINYINT UNSIGNED NOT NULL COMMENT 'Жанр фильма',
+    id SERIAL COMMENT 'РђР№РґРё',
+    movie_id BIGINT UNSIGNED NOT NULL COMMENT 'РђР№РґРё С„РёР»СЊРјР°',
+    movie_genres_id TINYINT UNSIGNED NOT NULL COMMENT 'Р–Р°РЅСЂ С„РёР»СЊРјР°',
     
     FOREIGN KEY (movie_id) REFERENCES movies(id),
     FOREIGN KEY (movie_genres_id) REFERENCES movie_genres(id)
-) COMMENT 'Жанры фильма';
+) COMMENT 'Р–Р°РЅСЂС‹ С„РёР»СЊРјР°';
 
 DROP TABLE IF EXISTS `movie_reviews`;
 CREATE TABLE `movies_reviews`(
-    id SERIAL COMMENT 'Айди',
-    user_id BIGINT UNSIGNED NOT NULL COMMENT 'Пользователь оставивший отзыв',
-    movie_id BIGINT UNSIGNED NOT NULL COMMENT 'Фильм на который был оставлен отзыв',
-    body TINYTEXT COMMENT 'Отзыв',
+    id SERIAL COMMENT 'РђР№РґРё',
+    user_id BIGINT UNSIGNED NOT NULL COMMENT 'РџРѕР»СЊР·РѕРІР°С‚РµР»СЊ РѕСЃС‚Р°РІРёРІС€РёР№ РѕС‚Р·С‹РІ',
+    movie_id BIGINT UNSIGNED NOT NULL COMMENT 'Р¤РёР»СЊРј РЅР° РєРѕС‚РѕСЂС‹Р№ Р±С‹Р» РѕСЃС‚Р°РІР»РµРЅ РѕС‚Р·С‹РІ',
+    body TINYTEXT COMMENT 'РћС‚Р·С‹РІ',
     
     FOREIGN KEY (user_id) REFERENCES users(id),
     FOREIGN KEY (movie_id) REFERENCES movies(id)
-)COMMENT 'Отзывы на фильм';
+)COMMENT 'РћС‚Р·С‹РІС‹ РЅР° С„РёР»СЊРј';
 
 DROP TABLE IF EXISTS `bookmarks`;
 CREATE TABLE `bookmarks`(
-    id SERIAL COMMENT 'Айди',
-    user_id BIGINT UNSIGNED NOT NULL COMMENT 'Принадлежность закладки пользователю',
-    movie_id BIGINT UNSIGNED NOT NULL COMMENT 'Фильм который лежит в закладках у пользователя',
+    id SERIAL COMMENT 'РђР№РґРё',
+    user_id BIGINT UNSIGNED NOT NULL COMMENT 'РџСЂРёРЅР°РґР»РµР¶РЅРѕСЃС‚СЊ Р·Р°РєР»Р°РґРєРё РїРѕР»СЊР·РѕРІР°С‚РµР»СЋ',
+    movie_id BIGINT UNSIGNED NOT NULL COMMENT 'Р¤РёР»СЊРј РєРѕС‚РѕСЂС‹Р№ Р»РµР¶РёС‚ РІ Р·Р°РєР»Р°РґРєР°С… Сѓ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ',
     
     FOREIGN KEY (user_id) REFERENCES users(id),
     FOREIGN KEY (movie_id) REFERENCES movies(id)
-) COMMENT 'Закладки пользователя';
+) COMMENT 'Р—Р°РєР»Р°РґРєРё РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ';
 
 
 DROP TABLE IF EXISTS `series_name`;
 CREATE TABLE `series_name`(
-    id SERIAL COMMENT 'Айди',
-    name VARCHAR(255) COMMENT 'Название сериала'
+    id SERIAL COMMENT 'РђР№РґРё',
+    name VARCHAR(255) COMMENT 'РќР°Р·РІР°РЅРёРµ СЃРµСЂРёР°Р»Р°'
     
    
-) COMMENT 'Название сериала';
+) COMMENT 'РќР°Р·РІР°РЅРёРµ СЃРµСЂРёР°Р»Р°';
 
 DROP TABLE IF EXISTS `series`;
 CREATE TABLE `series`(
-    id SERIAL COMMENT 'Айди',
-    series_name_id BIGINT UNSIGNED NOT NULL COMMENT 'Название сериала',
-    movie_id  BIGINT UNSIGNED NOT NULL COMMENT 'Айди сериала/фильма, который принадлежит к данному сериалу',
+    id SERIAL COMMENT 'РђР№РґРё',
+    series_name_id BIGINT UNSIGNED NOT NULL COMMENT 'РќР°Р·РІР°РЅРёРµ СЃРµСЂРёР°Р»Р°',
+    movie_id  BIGINT UNSIGNED NOT NULL COMMENT 'РђР№РґРё СЃРµСЂРёР°Р»Р°/С„РёР»СЊРјР°, РєРѕС‚РѕСЂС‹Р№ РїСЂРёРЅР°РґР»РµР¶РёС‚ Рє РґР°РЅРЅРѕРјСѓ СЃРµСЂРёР°Р»Сѓ',
 
     FOREIGN KEY (movie_id) REFERENCES movies(id),
     FOREIGN KEY (series_name_id) REFERENCES series_name(id)
-) COMMENT 'Сериалы';
+) COMMENT 'РЎРµСЂРёР°Р»С‹';
 
 DROP TABLE IF EXISTS `users_score`;
 CREATE TABLE `users_score`(
-    id SERIAL COMMENT 'Айди',
-    user_id BIGINT UNSIGNED NOT NULL COMMENT 'Пользователь оставивший оценку',
-    movie_id BIGINT UNSIGNED NOT NULL COMMENT 'Фильм которому оставили отзыв',
-    score TINYINT(1) COMMENT 'Отзыв',
+    id SERIAL COMMENT 'РђР№РґРё',
+    user_id BIGINT UNSIGNED NOT NULL COMMENT 'РџРѕР»СЊР·РѕРІР°С‚РµР»СЊ РѕСЃС‚Р°РІРёРІС€РёР№ РѕС†РµРЅРєСѓ',
+    movie_id BIGINT UNSIGNED NOT NULL COMMENT 'Р¤РёР»СЊРј РєРѕС‚РѕСЂРѕРјСѓ РѕСЃС‚Р°РІРёР»Рё РѕС‚Р·С‹РІ',
+    score TINYINT(1) COMMENT 'РћС‚Р·С‹РІ',
 
     FOREIGN KEY (movie_id) REFERENCES movies(id),
     FOREIGN KEY (user_id) REFERENCES users(id)
-) COMMENT 'Оценка пользователя';
+) COMMENT 'РћС†РµРЅРєР° РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ';
 
 
 
