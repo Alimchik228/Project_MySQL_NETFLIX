@@ -1,13 +1,13 @@
 use netflix;
 
-#Вывод названий фильмов и их средних оценок
+#Р’С‹РІРѕРґ РЅР°Р·РІР°РЅРёР№ С„РёР»СЊРјРѕРІ Рё РёС… СЃСЂРµРґРЅРёС… РѕС†РµРЅРѕРє
 SELECT AVG(score), m.name  
 FROM users_score
 JOIN movies m 
 WHERE m.id = movie_id
 GROUP BY movie_id 
 ;
-#Вывод топ 5 фильмов по средним оценкам
+#Р’С‹РІРѕРґ С‚РѕРї 5 С„РёР»СЊРјРѕРІ РїРѕ СЃСЂРµРґРЅРёРј РѕС†РµРЅРєР°Рј
 SELECT AVG(score), m.name  
 FROM users_score
 JOIN movies m 
@@ -16,10 +16,10 @@ GROUP BY movie_id
 ORDER BY AVG(score) DESC
 LIMIT 5;
 
-#Вывод Создателей 1-го фильма
+#Р’С‹РІРѕРґ РЎРѕР·РґР°С‚РµР»РµР№ 1-РіРѕ С„РёР»СЊРјР°
 SELECT * FROM filmmakers WHERE movie_id = 1;
 
-#Вывод топ 5 cериалов по средним оценкам их фильмов
+#Р’С‹РІРѕРґ С‚РѕРї 5 cРµСЂРёР°Р»РѕРІ РїРѕ СЃСЂРµРґРЅРёРј РѕС†РµРЅРєР°Рј РёС… С„РёР»СЊРјРѕРІ
 SELECT AVG(score),  sn.name 
 FROM users_score
 JOIN movies m , series s, series_name sn 
@@ -28,7 +28,7 @@ GROUP BY sn.name
 ORDER BY AVG(score) DESC
 LIMIT 5;
 
-#Вывод прочитанных сообщений пользователей родившихся в 21 веке
+#Р’С‹РІРѕРґ РїСЂРѕС‡РёС‚Р°РЅРЅС‹С… СЃРѕРѕР±С‰РµРЅРёР№ РїРѕР»СЊР·РѕРІР°С‚РµР»РµР№ СЂРѕРґРёРІС€РёС…СЃСЏ РІ 21 РІРµРєРµ
 SELECT p.birthday_at, 
        m.status,
        m.body,
@@ -36,8 +36,8 @@ SELECT p.birthday_at,
 FROM messeges m 
 INNER JOIN profiles p  
 WHERE m.status  = 'read' AND m.to_user_id = p.user_id AND p.birthday_at > '2000-00-00';
-#вложенные запросы
-#Вывод самых активных пользователей 
+#РІР»РѕР¶РµРЅРЅС‹Рµ Р·Р°РїСЂРѕСЃС‹
+#Р’С‹РІРѕРґ СЃР°РјС‹С… Р°РєС‚РёРІРЅС‹С… РїРѕР»СЊР·РѕРІР°С‚РµР»РµР№ 
 SELECT count(*),
 (SELECT first_name FROM users WHERE users.id = mr.user_id) AS 'name',
 (SELECT last_name FROM users WHERE users.id = mr.user_id)  AS 'fam'
@@ -46,7 +46,7 @@ GROUP BY mr.user_id
 ORDER BY count(*) DESC
 LIMIT 5;
 
-# Представление находящее всех пользователей писавших сообщения 
+# РџСЂРµРґСЃС‚Р°РІР»РµРЅРёРµ РЅР°С…РѕРґСЏС‰РµРµ РІСЃРµС… РїРѕР»СЊР·РѕРІР°С‚РµР»РµР№ РїРёСЃР°РІС€РёС… СЃРѕРѕР±С‰РµРЅРёСЏ 
 CREATE OR REPLACE VIEW view_from_users 
 AS 
 SELECT 
@@ -56,7 +56,7 @@ FROM messeges m ;
 
 SELECT * FROM view_from_users ;
 
-#Представление вывод названий фильмов и их средних оценок
+#РџСЂРµРґСЃС‚Р°РІР»РµРЅРёРµ РІС‹РІРѕРґ РЅР°Р·РІР°РЅРёР№ С„РёР»СЊРјРѕРІ Рё РёС… СЃСЂРµРґРЅРёС… РѕС†РµРЅРѕРє
 CREATE OR REPLACE VIEW view_avg_score 
 AS  
 SELECT AVG(score), m.name  
@@ -69,7 +69,7 @@ GROUP BY movie_id
 SELECT * FROM view_avg_score  ;
 
 
-#Топ людей с кем чаще всего общается наш пользователь
+#РўРѕРї Р»СЋРґРµР№ СЃ РєРµРј С‡Р°С‰Рµ РІСЃРµРіРѕ РѕР±С‰Р°РµС‚СЃСЏ РЅР°С€ РїРѕР»СЊР·РѕРІР°С‚РµР»СЊ
 DROP PROCEDURE IF EXISTS procedure_name;
 DELIMITER //
 CREATE PROCEDURE procedure_name(from_user_id BIGINT UNSIGNED)
@@ -86,7 +86,6 @@ DELIMITER ;
 
 
 CALL procedure_name(1);
-
 
 
 
